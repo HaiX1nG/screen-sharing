@@ -1,0 +1,38 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out;
+}
+
+/* 使用 CSS 变量定义主题 */
+:root {
+  --app-background: #ffffff;
+  --app-color: rgba(0, 0, 0, 0.85);
+  --code-bg-color: rgba(0, 0, 0, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --app-background: #1e1e1e;
+    --app-color: rgba(255, 255, 255, 0.85);
+    --code-bg-color: rgba(255, 255, 255, 0.06);
+  }
+}
+
+body {
+  background-color: var(--app-background);
+  color: var(--app-color);
+}
+
+code {
+  background-color: var(--code-bg-color);
+  font-size: 13px;
+  padding: 2px;
+  border-radius: 5px;
+  font-family: 'JetBrains Mono', 'Menlo', 'Manaco', monospace;
+}
