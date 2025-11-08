@@ -13,15 +13,15 @@ body,
 :root {
   --app-background: #ffffff;
   --app-color: rgba(0, 0, 0, 0.85);
-  --code-bg-color: rgba(0, 0, 0, 0.06);
+  --code-bg-color: rgba(206, 206, 206, 0.45);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --app-background: #1e1e1e;
     --app-color: rgba(255, 255, 255, 0.85);
-    --code-bg-color: rgba(255, 255, 255, 0.06);
   }
+
 }
 
 body {

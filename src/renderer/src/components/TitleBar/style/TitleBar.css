@@ -1,0 +1,182 @@
+/* 标题栏容器 - 默认亮色主题 */
+.title-bar {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  background: linear-gradient(to bottom, #f6f6f6 0%, #e8e8e8 100%);
+  border-bottom: 1px solid #d0d0d0;
+  padding: 0 10px;
+  -webkit-app-region: drag;
+  user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-sizing: border-box;
+  position: relative;
+  transition: all 0.3s ease-in-out; /* 添加过渡效果 */
+}
+
+/* 亮色主题 */
+.title-bar.theme-light {
+  background: linear-gradient(to bottom, #f6f6f6 0%, #e8e8e8 100%);
+  border-bottom: 1px solid #d0d0d0;
+}
+
+.title-bar.theme-light .title-bar-drag-region span {
+  color: #333;
+}
+
+/* 暗色主题 */
+.title-bar.theme-dark {
+  background: linear-gradient(to bottom, #2a2a2a 0%, #1a1a1a 100%);
+  border-bottom: 1px solid #000000;
+}
+
+.title-bar.theme-dark .title-bar-drag-region span {
+  color: #e0e0e0;
+}
+
+/* 窗口失焦时的标题栏样式 */
+.title-bar.window-blurred.theme-light {
+  background: linear-gradient(to bottom, #f0f0f0 0%, #e0e0e0 100%);
+}
+
+.title-bar.window-blurred.theme-light .title-bar-drag-region span {
+  color: #888;
+}
+
+.title-bar.window-blurred.theme-dark {
+  background: linear-gradient(to bottom, #222222 0%, #121212 100%);
+}
+
+.title-bar.window-blurred.theme-dark .title-bar-drag-region span {
+  color: #888;
+}
+
+/* 其余样式保持不变... */
+
+/* macOS 红绿灯容器 */
+.macos-traffic-lights {
+  display: flex;
+  gap: 8px;
+  -webkit-app-region: no-drag;
+  z-index: 10;
+  width: auto;
+  flex-shrink: 0;
+}
+
+/* 通用红绿灯按钮样式 */
+.traffic-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.traffic-light-icon {
+  font-size: 8px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  line-height: 1;
+}
+
+/* 窗口激活状态下的红绿灯 */
+.window-focused .traffic-light-close {
+  background: #ff5f57;
+}
+
+.window-focused .traffic-light-minimize {
+  background: #ffbd2e;
+}
+
+.window-focused .traffic-light-maximize {
+  background: #28ca42;
+}
+
+/* 窗口失焦状态下的红绿灯 */
+.window-blurred .traffic-light {
+  background: #ddd !important;
+}
+
+/* 悬停效果 */
+.window-focused .traffic-light:hover .traffic-light-icon {
+  opacity: 1;
+}
+
+.window-focused .traffic-light-close:hover {
+  background: #ff5f57;
+  filter: brightness(0.9);
+}
+
+.window-focused .traffic-light-minimize:hover {
+  background: #ffbd2e;
+  filter: brightness(0.9);
+}
+
+.window-focused .traffic-light-maximize:hover {
+  background: #28ca42;
+  filter: brightness(0.9);
+}
+
+/* 图标颜色 */
+.traffic-light-close .traffic-light-icon {
+  color: #8c1f1a;
+}
+
+.traffic-light-minimize .traffic-light-icon {
+  color: #8c5d1a;
+}
+
+.traffic-light-maximize .traffic-light-icon {
+  color: #0f6d1d;
+}
+
+/* 拖拽区域 */
+.title-bar-drag-region {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.title-bar-drag-region span {
+  pointer-events: auto;
+  transition: color 0.3s ease-in-out; /* 添加颜色过渡 */
+}
+
+/* 移除原有的媒体查询，因为现在通过类名控制主题 */
+/* 响应式调整 */
+@media (max-width: 480px) {
+  .title-bar {
+    height: 32px;
+  }
+
+  .traffic-light {
+    width: 14px;
+    height: 14px;
+  }
+
+  .traffic-light-icon {
+    font-size: 9px;
+  }
+}
+
+.traffic-light {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}

@@ -1,43 +1,12 @@
-import { useEffect, useState } from 'react'
 import '../src/assets/css/base.css'
-import { ConfigProvider, theme, App as AntdApp, Switch } from 'antd'
-import { SunOutlined, MoonOutlined } from '@ant-design/icons'
-
-type ThemeMode = 'system' | 'light' | 'dark'
-
-function useSystemTheme(): boolean {
-  const [isDark, setIsDark] = useState(false)
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-
-    const handleChange = (e: MediaQueryListEvent): void => {
-      setIsDark(e.matches)
-    }
-
-    setIsDark(mediaQuery.matches)
-    mediaQuery.addEventListener('change', handleChange)
-
-    return () => {
-      mediaQuery.removeEventListener('change', handleChange)
-    }
-  }, [])
-  return isDark
-}
+import { ConfigProvider, theme, App as AntdApp } from 'antd'
+import { useTheme } from './hook/useTheme'
+import ThemeSwitch from './components/ThemeSwitch/ThemeSwitch'
+import TitleBar from './components/TitleBar/TitleBar'
 
 function App(): React.JSX.Element {
-  const systemIsDark = useSystemTheme()
-  const [themeMode, setThemeMode] = useState<ThemeMode>('system')
-
-  // 计算实际使用的主题
-  const actualIsDark = themeMode === 'system' ? systemIsDark : themeMode === 'dark'
-
-  const handleSwitchChange = (checked: boolean): void => {
-    setThemeMode(checked ? 'dark' : 'light')
-  }
-
-  // 计算开关的初始状态
-  const switchChecked = themeMode === 'system' ? systemIsDark : themeMode === 'dark'
+  const { themeMode, actualIsDark, switchChecked, toggleTheme, setSystemTheme, systemIsDark } =
+    useTheme()
 
   return (
     <>
@@ -49,17 +18,19 @@ function App(): React.JSX.Element {
             minHeight: '100vh',
             background: actualIsDark ? '#1e1e1e' : '#ffffff',
             color: actualIsDark ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.85)',
-            transition: 'all 0.3s'
+            transition: 'all 0.3s ease-in-out'
           }}
         >
           <div>
             <div>
-              <Switch
-                checkedChildren={<MoonOutlined />}
-                unCheckedChildren={<SunOutlined />}
-                checked={switchChecked}
-                onChange={handleSwitchChange}
-                defaultChecked
+              <TitleBar isDark={actualIsDark} />
+            </div>
+            <div>
+              <ThemeSwitch
+                themeMode={themeMode}
+                switchChecked={switchChecked}
+                onToggle={toggleTheme}
+                onSetSystem={setSystemTheme}
               />
             </div>
             <div>

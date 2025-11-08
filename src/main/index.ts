@@ -6,12 +6,15 @@ import icon from '../../resources/icon.png?asset'
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 960,
     show: false,
     autoHideMenuBar: true,
+    titleBarStyle: 'hidden',
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
+      contextIsolation: true, // 启用上下文隔离
+      nodeIntegration: false, // 禁用 Node.js 集成（安全考虑）
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }
@@ -53,6 +56,25 @@ app.whenReady().then(() => {
   ipcMain.on('ping', () => console.log('pong'))
 
   createWindow()
+
+  ipcMain.on('window-minimize', () => {
+    const mainWindow = BrowserWindow.getFocusedWindow()
+    mainWindow?.minimize()
+  })
+
+  ipcMain.on('window-maximize', () => {
+    const mainWindow = BrowserWindow.getFocusedWindow()
+    if (mainWindow?.isMaximized()) {
+      mainWindow.unmaximize()
+    } else {
+      mainWindow?.maximize()
+    }
+  })
+
+  ipcMain.on('window-close', () => {
+    const mainWindow = BrowserWindow.getFocusedWindow()
+    mainWindow?.close()
+  })
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
